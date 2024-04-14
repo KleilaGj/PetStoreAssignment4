@@ -2,7 +2,7 @@
 CREATE DATABASE petstore_management;
 -- Switch to the petstore_management database
 USE petstore_management;
--- Create a table named Pets_info to store information about books
+-- Create a table named Pets_info to store information about pets
 CREATE TABLE Pets_info (
 pet_id INT AUTO_INCREMENT PRIMARY KEY, -- Included a unique identifier for each pet, their name, breed and age 
 pet_name VARCHAR(50),
