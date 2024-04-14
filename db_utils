@@ -1,0 +1,29 @@
+import mysql.connector
+import config
+
+def connect_to_database():
+    try:
+        connection = mysql.connector.connect(
+             host='localhost:3306',
+            user='root',
+            password='Tahirah123',
+            database='petstore_management'
+             )
+        return connection
+    except mysql.connector.Error as e:
+        print(f"Database connection error: {e}")
+        return None
+
+def execute_query(connection, query, data=None):
+    try:
+        cursor = connection.cursor()
+        if data:
+            cursor.execute(query, data)
+        else:
+            cursor.execute(query)
+        result = cursor.fetchall()  # Fetch all rows
+        cursor.close()
+        return result
+    except mysql.connector.Error as e:
+        print(f"Error executing query: {e}")
+        return None
