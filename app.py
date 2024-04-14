@@ -3,9 +3,9 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 pets = [
-    {"id": 1, "name": "Dog", "breed": "Poodle", "age": 2},
-    {"id": 2, "name": "Cat", "breed": "Ginger", "age": 3},
-    {"id": 3, "name": "Bird", "breed": "Parrot", "age": 1}
+    {"id": 1, "name": "Dog", "breed": "Poodle", "age": 2 "price": 500},
+    {"id": 2, "name": "Cat", "breed": "Ginger", "age": 3 "price": 300},
+    {"id": 3, "name": "Bird", "breed": "Parrot", "age": 1 "price": 200}
 ]
 
 orders = []
