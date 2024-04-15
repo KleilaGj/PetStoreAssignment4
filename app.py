@@ -11,44 +11,33 @@ def get_pets():
     query = "SELECT * FROM Pets_info"
     pets = execute_query(db_connection, query)
     return jsonify(pets)
-#modifying code 
-@app.route('/pets/<int:pet_id>', methods=['GET'])
-def get_pet(pet_id):
-    query = "SELECT * FROM Pets_info WHERE pet_id = %s"
-    data = (pet_id,)
-    if pet:
-        return jsonify(pet)
-    else:
-        return jsonify({"message": "Pet not found"}), 404
+# Modified route to support both GET and PUT methods
+@app.route('/pets/<int:pet_id>', methods=['GET', 'PUT'])
+def get_or_update_pet(pet_id):
+    if request.method == 'GET':
+        # SELECT query to fetch a specific pet by ID
+        query = "SELECT * FROM Pets_info WHERE pet_id = %s"
+        data = (pet_id,)
+        pet = execute_query(db_connection, query, data)
+        if pet:
+            return jsonify(pet)
+        else:
+            return jsonify({"message": "Pet not found"}), 404
+    elif request.method == 'PUT':
+        # Update pet information
+        data = request.get_json()
+        new_name = data.get('name')
+        new_breed = data.get('breed')
+        new_age = data.get('age')
+        new_price = data.get('price')
 
-@app.route('/orders', methods=['POST'])
-def place_order():
-    data = request.get_json()
-    pet_id = data.get('pet_id')
-    if not pet_id:
-        return jsonify({"message": "Pet ID is required"}), 400
-        #check if the pet exists in the database 
-query =  "SELECT * FROM Pets_info WHERE pet_id = %s"
-pet_data = (pet_id,)
-pet = execute_query(db_connection, query, pet_data)
-    if not pet:
-        return jsonify({"message": "Pet not found"}), 404
-#insert order into the database 
-query = "INSERT INTO Orders (pet_id) VALUES (%s)"
-    order_data = (pet_id,)
-    execute_query(db_connection, query, order_data)
-    return jsonify({"message": "Order placed"}), 201
+        # UPDATE query to modify pet's information in the database
+        update_query = "UPDATE Pets_info SET name=%s, breed=%s, age=%s, price=%s WHERE pet_id=%s"
+        update_data = (new_name, new_breed, new_age, new_price, pet_id)
+        execute_query(db_connection, update_query, update_data)
 
-@app.route('/orders/<int:order_id>', methods=['GET'])
-def get_order(order_id):
-    # Fetch order data by ID from the database
-    query = "SELECT * FROM Orders WHERE order_id = %s"
-    data = (order_id,)
-    order = execute_query(db_connection, query, data)
-    if order:
-        return jsonify(order)
-    else:
-        return jsonify({"message": "Order not found"}), 404
+        return jsonify({"message": "Pet information updated successfully"}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
+
