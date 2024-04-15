@@ -37,7 +37,10 @@ def get_or_update_pet(pet_id):
         execute_query(db_connection, update_query, update_data)
 
         return jsonify({"message": "Pet information updated successfully"}), 200
-
-if __name__ == '__main__':
+#define a function to start the Flask application with a welcome statement 
+def run():
+    print("Welcome to the Pet Store API!")
     app.run(debug=True)
+if __name__ == '__main__':
+    
 
