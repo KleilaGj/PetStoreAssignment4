@@ -4,7 +4,8 @@ import config
 def connect_to_database():
     try:
         connection = mysql.connector.connect(
-             host='localhost:3306',
+             host='localhost',
+            port = 3306,
             user='root',
             password='Tahirah123',
             database='petstore_management'
