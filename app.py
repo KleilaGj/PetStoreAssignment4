@@ -4,14 +4,6 @@ from db_utils import connect_to_database, execute_query
 app = Flask(__name__)
 #adding code to connect to the database 
 db_connection = connect_to_database()
-# previous code pets = [
-    {"id": 1, "name": "Dog", "breed": "Poodle", "age": 2, "price": 500},
-    {"id": 2, "name": "Cat", "breed": "Ginger", "age": 3, "price": 300},
-    {"id": 3, "name": "Bird", "breed": "Parrot", "age": 1, "price": 200}
-]
-
-#previous code orders = []
-
 #modifiying current code 
 @app.route('/pets', methods=['GET'])
 def get_pets():
